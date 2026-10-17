@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="Caseo" />
 <link rel="manifest" href="/site.webmanifest" />
 <title>Caseo | Phone Cases</title>
-<meta name="description" content="Caseo phone cases: 40 designs, in tough or clear. Free delivery across Egypt.">
+<meta name="description" content="Caseo phone cases: 70 designs, in tough or clear. Free delivery across Egypt.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,600&family=Inter:wght@400;500;600;700;800&family=Cairo:wght@500;700;800&display=swap" rel="stylesheet">
@@ -307,6 +307,29 @@ footer{background:var(--ink)}footer b{color:var(--y)}footer .ar{margin-left:.4em
  .heroar{bottom:22%}
 }
 .case::after{z-index:2}
+
+/* ---- v7: real camera cutouts (iPhone / Android) ---- */
+.cam{position:absolute;z-index:3;pointer-events:none;background-repeat:no-repeat;background-size:100% 100%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}
+html:not([data-plat="android"]) .cam{left:9%;top:4.5%;width:40%;height:19%;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect x=%221.5%22 y=%221.5%22 width=%2297%22 height=%2297%22 rx=%2226%22 fill=%22%23141416%22 stroke=%22%233b3b41%22 stroke-width=%223%22/%3E%3Ccircle cx=%2231%22 cy=%2230%22 r=%2217%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2231%22 cy=%2230%22 r=%229.350000000000001%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2227.6%22 cy=%2226.259999999999998%22 r=%222.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3Ccircle cx=%2231%22 cy=%2270%22 r=%2217%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2231%22 cy=%2270%22 r=%229.350000000000001%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2227.6%22 cy=%2266.26%22 r=%222.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3Ccircle cx=%2269%22 cy=%2250%22 r=%2217%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2269%22 cy=%2250%22 r=%229.350000000000001%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2265.6%22 cy=%2246.26%22 r=%222.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3Ccircle cx=%2280%22 cy=%2217%22 r=%225%22 fill=%22%23d9c98a%22 opacity=%22.85%22/%3E%3Ccircle cx=%2282%22 cy=%2283%22 r=%224.5%22 fill=%22%2326262b%22 stroke=%22%2355555c%22 stroke-width=%222%22/%3E%3C/svg%3E")}
+html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 315%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2223.1%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2241.6%22 cy=%2240.76%22 r=%226.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2242%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2223.1%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2241.6%22 cy=%22148.76%22 r=%226.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2242%22 fill=%22%230a0a0c%22 stroke=%22%2355555c%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2223.1%22 fill=%22%231b2838%22/%3E%3Ccircle cx=%2241.6%22 cy=%22256.76%22 r=%226.72%22 fill=%22%236f8db3%22 opacity=%22.55%22/%3E%3C/svg%3E")}
+.case:has(.cam) .ph::after{display:none}
+
+/* ---- v8: rendered product pictures (iPhone) ---- */
+.rcase{position:relative;width:59%;margin:6px auto 12px;aspect-ratio:453/900}
+.rcase img.r{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 14px 14px rgba(21,19,15,.28))}
+.rfall{display:none}
+html[data-plat="android"] .rcase{display:none}
+html[data-plat="android"] .rfall{display:block}
+.rthumbs{position:absolute;left:0;right:0;bottom:-38px;display:flex;gap:8px;justify-content:center}
+.rthumbs button{border:2px solid var(--ink);background:#fff;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:700}
+.rthumbs button.on{background:var(--y)}
+.mb .rcase{margin-bottom:50px}
+.rtag{position:absolute;top:6px;right:-6px;z-index:3;background:var(--y);border:2px solid var(--ink);border-radius:999px;padding:1px 10px;font-size:11px;font-weight:800;transform:rotate(4deg)}
+/* ---- v9: empty camera holes (true cutouts) ---- */
+html:not([data-plat="android"]) .case:has(.cam){-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M19.4 9.45 h19.2 a10.4 10.4 0 0 1 10.4 10.4 v19.099999999999998 a10.4 10.4 0 0 1 -10.4 10.4 h-19.2 a10.4 10.4 0 0 1 -10.4 -10.4 v-19.099999999999998 a10.4 10.4 0 0 1 10.4 -10.4 Z%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M19.4 9.45 h19.2 a10.4 10.4 0 0 1 10.4 10.4 v19.099999999999998 a10.4 10.4 0 0 1 -10.4 10.4 h-19.2 a10.4 10.4 0 0 1 -10.4 -10.4 v-19.099999999999998 a10.4 10.4 0 0 1 10.4 -10.4 Z%22/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%}
+html[data-plat="android"] .case:has(.cam){-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M10.92 21.45 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 47.4 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 73.3 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M10.92 21.45 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 47.4 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 73.3 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z%22/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%}
+html:not([data-plat="android"]) .cam{left:9%;top:4.5%;width:40%;height:19%;background:none;border-radius:26%;box-shadow:0 0 0 2px #15130f,0 0 0 5px rgba(21,19,15,.14);filter:none}
+html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 315%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% 100%;box-shadow:none;border-radius:0;filter:none}
 </style>
 </head>
 <body>
@@ -332,7 +355,7 @@ footer{background:var(--ink)}footer b{color:var(--y)}footer .ar{margin-left:.4em
     <div class="brands" id="homeBrands"></div>
   </div></div>
   <div class="blk"><div class="wrap">
-    <div class="hd"><h2><span class="ar st">أحدث التصميمات</span>Fresh designs</h2><a class="btn alt" href="#shop">Shop all 40 designs <span class="ar">شوف كل التصميمات</span></a></div>
+    <div class="hd"><h2><span class="ar st">أحدث التصميمات</span>Fresh designs</h2><a class="btn alt" href="#shop">Shop all 70 designs <span class="ar">شوف كل التصميمات</span></a></div>
     <div class="grid" id="featGrid"></div>
   </div></div>
   <div class="blk" style="padding-top:0"><div class="wrap">
@@ -359,7 +382,7 @@ footer{background:var(--ink)}footer b{color:var(--y)}footer .ar{margin-left:.4em
   <h1>Your own design <span class="ar st">تصميمك انت</span></h1>
   <p class="muted" style="margin:0 0 26px;max-width:62ch">Upload your artwork, pick your case and phone, and add it to your cart. We confirm every custom order on WhatsApp before we print. <span class="ar">ارفع صورتك واختار الجراب والموبايل، ونأكد معاك على واتساب قبل الطباعة.</span></p>
   <div class="cugrid">
-    <div class="cuprev"><div class="case k-tough" id="cuCase"><div class="ph"><span>Your design here<i class="ar" style="margin:4px 0 0">تصميمك هنا</i></span></div></div><p class="muted tc" style="margin:0">Preview only. Your image stays on your device until you send it to us.</p></div>
+    <div class="cuprev"><div class="case k-tough" id="cuCase"><span class="cam"></span><div class="ph"><span>Your design here<i class="ar" style="margin:4px 0 0">تصميمك هنا</i></span></div></div><p class="muted tc" style="margin:0">Preview only. Your image stays on your device until you send it to us.</p></div>
     <div class="box">
       <div class="field" style="margin-top:0"><span class="l">1 · Upload your image <span class="ar">ارفع صورتك</span></span><label class="drop" for="cuFile"><input id="cuFile" type="file" accept="image/png,image/jpeg,image/webp"><span id="cuName">Tap to choose an image (PNG, JPG or WebP, up to 10 MB). A sharp image of 1500px or more prints best.</span></label></div>
       <div id="cuCtl"></div>
@@ -399,7 +422,7 @@ footer{background:var(--ink)}footer b{color:var(--y)}footer .ar{margin-left:.4em
 </div></div></section>
 
 <section class="page" id="page-about"><div class="pg"><div class="wrap two">
-  <div><h1>About Caseo <span class="ar st">من نحن</span></h1><p style="font-size:18px">Caseo makes phone cases with ready-made designs, so you pick the one that feels like you and we handle the rest.</p><p class="muted">We offer one tough case and two clear cases. Each of our 40 designs is available on all three, in the phone model you choose.</p></div>
+  <div><h1>About Caseo <span class="ar st">من نحن</span></h1><p style="font-size:18px">Caseo makes phone cases with ready-made designs, so you pick the one that feels like you and we handle the rest.</p><p class="muted">We offer one tough case and two clear cases. Each of our 70 designs is available on all three, in the phone model you choose.</p></div>
   <div class="box"><h3>Our three cases</h3><div id="aboutCases"></div></div>
 </div></div></section>
 
@@ -428,7 +451,7 @@ footer{background:var(--ink)}footer b{color:var(--y)}footer .ar{margin-left:.4em
 </main>
 
 <footer><div class="wrap">
-  <div><img class="flogo" data-lg alt="Caseo"><p>Phone cases in 40 designs.</p></div>
+  <div><img class="flogo" data-lg alt="Caseo"><p>Phone cases in 70 designs.</p></div>
   <div><b>Shop <span class="ar">المتجر</span></b><a href="#shop">All designs</a><a href="#custom">Your own design</a><a href="#about">About</a><a href="#shipping">Shipping and returns</a></div>
   <div><b>Help <span class="ar">مساعدة</span></b><a href="#faq">FAQ</a><a href="#contact">Contact us</a></div>
   <div><b>Reach us <span class="ar">تواصل معنا</span></b><a href="mailto:caseoshop11@gmail.com">caseoshop11@gmail.com</a><a href="https://wa.me/201556059711" target="_blank" rel="noopener">WhatsApp 01556059711</a><p>&copy; <span id="yr"></span> Caseo</p></div>
@@ -450,7 +473,7 @@ var CFG={
   WEB3FORMS_KEY:"YOUR_CASEO_WEB3FORMS_ACCESS_KEY",   /* make a new key for Caseo */
   WHATSAPP:"201556059711",
   HERO_IMG:"",   /* optional: transparent PNG/WebP of the phone back (straight on). If set, it replaces the 3D placeholder. */
-  IMG_BASE:"images/",   /* folder next to index.html: design-01.webp ... design-40.webp, cat-egypt.webp ... */
+  IMG_BASE:"images/",   /* folder next to index.html: design-01.webp ... design-68.webp, cat-egypt.webp ... */
   PAY:{"Telda":"@omarkhaled156","InstaPay":"@omarkhaled2611","Vodafone Cash":"01064856698","Cash on Delivery":""},
   INSTAPAY_QR:"https://odos.omardirty999.workers.dev/instapay-qr.webp",
   CUSTOM_FEE:0,   /* extra EGP charged on top of the case price for a custom design */
@@ -473,7 +496,7 @@ var CASES=[
  {id:"armor",n:"Clear Armor Case",price:299,d:"See-through, with reinforced armored corners and the design on the back.",c:"k-armor"},
  {id:"clear",n:"Clear Case",price:249,d:"Plain and see-through, with the design on the back.",c:"k-clear"}
 ];
-var DES=[];for(var i0=0;i0<40;i0++)DES.push({n:"Design "+(i0<9?"0":"")+(i0+1)});
+var DES=[];for(var i0=0;i0<70;i0++)DES.push({n:"Design "+(i0<9?"0":"")+(i0+1)});
 var FEAT=[0,1,2,3,4,5,6,7];
 var FAQ=[
 ["How do I order?","Pick a design, choose your case and phone model, add it to the cart and place your order. We confirm it with you on WhatsApp."],
@@ -501,14 +524,26 @@ var IO=("IntersectionObserver" in window&&!matchMedia("(prefers-reduced-motion: 
 function rv(){if(!IO)return;[].forEach.call(document.querySelectorAll(".hd,.type,.band,.box,details,.pg h1,.pg>.wrap>p,.pg .two>div>p,.cw,footer .wrap>div"),function(el){if(el.dataset.rv)return;el.dataset.rv=1;var k=el.parentNode?[].indexOf.call(el.parentNode.children,el):0;el.style.transitionDelay=Math.min(k,8)*70+"ms";el.classList.add("rv");IO.observe(el);});}
 
 /* ===== design cards: blank until artwork is uploaded ===== */
-function pic(i){return '<div class="ph"></div><img alt="" src="'+CFG.IMG_BASE+'design-'+(i<9?"0":"")+(i+1)+'.webp" onerror="this.remove()">';}
+var curPlat="iphone",noAnd={};
+function platOf(b){return b&&b!=="apple"?"android":"iphone";}
+function dnum(i){return (i<9?"0":"")+(i+1);}
+function dsrc(n){return CFG.IMG_BASE+"design-"+n+((curPlat==="android"&&!noAnd[n])?"-android":"")+".webp";}
+function imgFail(el){var n=el.getAttribute("data-d");if(/-android\.webp$/.test(el.getAttribute("src"))){noAnd[n]=1;el.src=dsrc(n);}else el.remove();}
+function setPlat(p){curPlat=p;document.documentElement.setAttribute("data-plat",p);[].forEach.call(document.querySelectorAll("img[data-d]"),function(im){var n=im.getAttribute("data-d"),u=dsrc(n);if(im.getAttribute("src")!==u)im.src=u;});}
+function pic(i){var n=dnum(i);return '<div class="ph"></div><img alt="" data-d="'+n+'" src="'+dsrc(n)+'" onerror="imgFail(this)"><span class="cam"></span>';}
 var HS='<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 var wish=[];try{wish=JSON.parse(localStorage.getItem("caseo_wish")||"[]");}catch(e){}
 wish=(Array.isArray(wish)?wish:[]).filter(function(i){return Number.isInteger(i)&&DES[i];});
 function isW(i){return wish.indexOf(i)>-1;}
+var RENDERS={};   /* design index (design number minus 1) that has render-NN.webp and render-NN-angle.webp (iPhone renders) */
 var BAG='<svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>';
 function card(i){return '<div class="cw"><button class="heart'+(isW(i)?' on':'')+'" data-w="'+i+'" aria-label="Save to wishlist" aria-pressed="'+isW(i)+'">'+HS+'</button><button class="qa" data-qa="'+i+'" aria-label="Quick add to cart">'+BAG+'</button>'+cardBtn(i)+'</div>';}
-function cardBtn(i){return '<button class="card" data-i="'+i+'"><div class="case">'+pic(i)+'</div><h3>'+DES[i].n+'</h3><small class="muted">From '+fmt(Math.min.apply(null,CASES.map(function(c){return c.price;})))+'</small></button>';}
+function rimg(i,v){return CFG.IMG_BASE+"render-"+dnum(i)+(v==="angle"?"-angle":"")+".webp";}
+function cardPic(i){if(!RENDERS[i])return '<div class="case">'+pic(i)+'</div>';
+ return '<div class="rcase"><span class="rtag">New 3D</span><img class="r" alt="" src="'+rimg(i)+'" onerror="this.closest(\'.rcase\').remove();var f=this.closest(\'.card\');if(f)f.querySelector(\'.rfall\').style.display=\'block\';"></div><div class="case rfall">'+pic(i)+'</div>';}
+function modalPic(i,c){if(!RENDERS[i])return '<div><div class="case '+c.c+'">'+pic(i)+'</div></div>';
+ return '<div><div class="rcase"><span class="rtag">New 3D</span><img class="r" id="rimg" alt="" src="'+rimg(i)+'"><div class="rthumbs"><button type="button" class="on" data-rv="front">Front</button><button type="button" data-rv="angle">Angle</button></div></div><div class="case rfall '+c.c+'">'+pic(i)+'</div></div>';}
+function cardBtn(i){return '<button class="card" data-i="'+i+'">'+cardPic(i)+'<h3>'+DES[i].n+'</h3><small class="muted">From '+fmt(Math.min.apply(null,CASES.map(function(c){return c.price;})))+'</small></button>';}
 
 /* ===== pages, shop, modal ===== */
 $("featGrid").innerHTML=FEAT.map(card).join("");
@@ -543,10 +578,10 @@ function pk(st){var b=brand(st.b);
 function pkBind(box,get,redraw){box.addEventListener("click",function(e){var t=e.target.closest("[data-b]");if(t){var st=get();st.b=t.getAttribute("data-b");st.m="";redraw();}});
  box.addEventListener("change",function(e){if(e.target.hasAttribute&&e.target.hasAttribute("data-pm")){get().m=e.target.value;redraw();}});}
 var cur={i:0,k:"tough",b:"",m:"",q:1};
-function openM(i){var b=LS.b||brandOf(LS.m)||"";cur={i:i,k:lsOK()?LS.k:"tough",b:b,m:(lsOK()&&brandOf(LS.m)===b)?LS.m:"",q:1};pushRV(i);drawM();$("modal").classList.add("on");}
+function openM(i){var b=LS.b||brandOf(LS.m)||"";cur={i:i,k:lsOK()?LS.k:"tough",b:b,m:(lsOK()&&brandOf(LS.m)===b)?LS.m:"",q:1};setPlat(platOf(b));pushRV(i);drawM();$("modal").classList.add("on");}
 function syncAdd(){var ok=!!cur.m;$("addBtn").disabled=!ok;$("mHelp").style.display=ok?"none":"block";}
 function drawM(){var d=DES[cur.i],c=kase(cur.k),sc=$("mb").scrollTop;
- $("mb").innerHTML='<button class="x mx" id="mx" aria-label="Close">&times;</button><div><div class="case '+c.c+'">'+pic(cur.i)+'</div></div><div><p class="muted" style="margin:0">Design <span class="ar">التصميم</span></p><h2 style="font-size:34px;margin:2px 0 6px">'+d.n+'</h2>'+
+ $("mb").innerHTML='<button class="x mx" id="mx" aria-label="Close">&times;</button>'+modalPic(cur.i,c)+'<div><p class="muted" style="margin:0">Design <span class="ar">التصميم</span></p><h2 style="font-size:34px;margin:2px 0 6px">'+d.n+'</h2>'+
  (sold(cur.i)?'<p class="sold">'+sold(cur.i)+' sold <span class="ar">اتباع منه '+sold(cur.i)+' قطعة</span></p>':'')+
  '<div class="field" style="margin-top:0"><span class="l">Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cur.k?' on':'')+'" data-k="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p></div>'+
  '<div id="pkBox">'+pk(cur)+'</div>'+
@@ -554,9 +589,10 @@ function drawM(){var d=DES[cur.i],c=kase(cur.k),sc=$("mb").scrollTop;
  '<button class="btn full" id="addBtn"'+(cur.m?'':' disabled')+'>Add to cart <span class="ar">أضف للسلة</span></button><p class="help" id="mHelp" style="display:'+(cur.m?'none':'block')+'">Pick your phone brand and model to continue <span class="ar">اختار الماركة والموديل الأول</span></p>'+
  '<button class="btn alt full" id="wishBtn" style="margin-top:10px">'+(isW(cur.i)?'Saved to wishlist <span class="ar">تم الحفظ</span>':'Save to wishlist <span class="ar">احفظه في المفضلة</span>')+'</button><p class="msg" id="mMsg"></p></div>';
  $("mb").scrollTop=sc;}
-pkBind($("mb"),function(){return cur;},function(){$("pkBox").innerHTML=pk(cur);syncAdd();});
+pkBind($("mb"),function(){return cur;},function(){$("pkBox").innerHTML=pk(cur);syncAdd();setPlat(platOf(cur.b));});
 $("mb").addEventListener("click",function(e){var t=e.target.closest("button");if(!t)return;
  if(t.id==="mx")return $("modal").classList.remove("on");
+ if(t.hasAttribute("data-rv")){var v=t.getAttribute("data-rv");$("rimg").src=rimg(cur.i,v);[].forEach.call(t.parentNode.children,function(x){x.classList.toggle("on",x===t);});return;}
  if(t.hasAttribute("data-k")){cur.k=t.getAttribute("data-k");drawM();return;}
  if(t.hasAttribute("data-qm")&&cur.q>1){cur.q--;drawM();return;} if(t.hasAttribute("data-qp")&&cur.q<10){cur.q++;drawM();return;}
  if(t.id==="wishBtn"){toggleW(cur.i);drawM();return;}
@@ -587,7 +623,7 @@ rvl=(Array.isArray(rvl)?rvl:[]).filter(function(i){return Number.isInteger(i)&&D
 function pushRV(i){rvl=[i].concat(rvl.filter(function(x){return x!==i;})).slice(0,8);try{localStorage.setItem("caseo_rv",JSON.stringify(rvl));}catch(e){}drawRV();}
 function drawRV(){[].forEach.call(document.querySelectorAll(".rvbox"),function(b){b.innerHTML=rvl.length?'<div class="hd"><h2><span class="ar st">شاهدتها مؤخراً</span>Recently viewed</h2></div><div class="grid">'+rvl.map(card).join("")+'</div>':"";});rv();}
 /* ===== home: marquee, brand tiles, category tiles ===== */
-(function(){var parts=["Free delivery across Egypt|توصيل مجاني لكل مصر","40 designs|٤٠ تصميم","Telda · InstaPay · Vodafone Cash|تيلدا · إنستاباي · فودافون كاش","We confirm every order on WhatsApp|بنأكد كل طلب على واتساب"];
+(function(){var parts=["Free delivery across Egypt|توصيل مجاني لكل مصر","70 designs|٧٠ تصميم","Telda · InstaPay · Vodafone Cash|تيلدا · إنستاباي · فودافون كاش","We confirm every order on WhatsApp|بنأكد كل طلب على واتساب"];
  var one=parts.map(function(p){var x=p.split("|");return '<span>'+x[0]+'</span><span class="ar">'+x[1]+'</span>';}).join("");$("mqIn").innerHTML=one+one+one+one;})();
 $("homeBrands").innerHTML=BRANDS.map(function(x){return '<button type="button" class="bt" data-hb="'+x.id+'"><b>'+esc(x.n)+'</b><i class="ar">'+x.ar+'</i></button>';}).join("");
 function drawCats(){$("catTiles").innerHTML=CATS.map(function(c,j){return '<button class="ct2 t'+(j%4)+'" data-cat="'+c.id+'"><img alt="" src="'+CFG.IMG_BASE+'cat-'+c.id+'.webp" onerror="this.remove();" onload="this.parentNode.classList.add(\'hasimg\')"><span class="ar">'+c.ar+'</span><b>'+c.n+'</b></button>';}).join("");}
@@ -595,13 +631,13 @@ drawCats();
 function drawShopFor(){var b=brand(LS.b);$("shopFor").innerHTML=b?'<span class="chip on">Shopping for <b>'+esc(b.n)+'</b> <span class="ar">بتتسوق لموبايل '+b.ar+'</span> <button type="button" data-clearb style="background:none;border:0;font-weight:700;text-decoration:underline">change</button></span>':"";}
 document.addEventListener("click",function(e){
  var t=e.target.closest&&e.target.closest("[data-hb]");
- if(t){LS={k:LS.k,m:"",b:t.getAttribute("data-hb")};try{localStorage.setItem("caseo_last",JSON.stringify(LS));}catch(x){}drawShopFor();location.hash="#shop";return;}
+ if(t){LS={k:LS.k,m:"",b:t.getAttribute("data-hb")};try{localStorage.setItem("caseo_last",JSON.stringify(LS));}catch(x){}setPlat(platOf(LS.b));drawShopFor();location.hash="#shop";return;}
  t=e.target.closest&&e.target.closest("[data-clearb]");
- if(t){LS={k:LS.k,m:"",b:""};try{localStorage.setItem("caseo_last",JSON.stringify(LS));}catch(x){}drawShopFor();return;}
+ if(t){LS={k:LS.k,m:"",b:""};try{localStorage.setItem("caseo_last",JSON.stringify(LS));}catch(x){}setPlat("iphone");drawShopFor();return;}
  t=e.target.closest&&e.target.closest("[data-cat]");
  if(t){catF=t.getAttribute("data-cat");shop();if(location.hash!=="#shop")location.hash="#shop";else window.scrollTo(0,0);}
 });
-drawShopFor();drawRV();
+drawShopFor();drawRV();setPlat(platOf(LS.b||brandOf(LS.m)));
 /* ===== custom design page ===== */
 var cu={k:"tough",b:"",m:"",img:""};
 function customNote(){return cart.some(function(c){return c.i===-1;})?'<p class="note warn">Your cart has a custom design. After you place the order, send us your image on WhatsApp so we can start. <span class="ar">بعد الطلب ابعتلنا الصورة على واتساب</span> <a style="text-decoration:underline;font-weight:700" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I ordered a custom design. Sending my image now.")+'">Open WhatsApp</a></p>':"";}
@@ -611,7 +647,7 @@ function drawCu(){var c=kase(cu.k),ok=!!(cu.img&&cu.m);
   '<div id="cuPk">'+pk(cu)+'</div><p style="font-size:24px;font-weight:700;margin:16px 0 10px">'+fmt(c.price+(+CFG.CUSTOM_FEE||0))+'</p>'+
   '<button class="btn full" id="cuAdd"'+(ok?'':' disabled')+'>Add custom case to cart <span class="ar">أضف للسلة</span></button><p class="help" id="cuHelp" style="display:'+(ok?'none':'block')+'">'+(!cu.img?'Upload your image first. ':'')+(!cu.m?'Pick your phone brand and model. ':'')+'<span class="ar">ارفع الصورة واختار الموديل</span></p>';}
 function syncCu(){var ok=!!(cu.img&&cu.m);$("cuAdd").disabled=!ok;$("cuHelp").style.display=ok?"none":"block";$("cuHelp").firstChild&&($("cuHelp").firstChild.nodeValue=(!cu.img?"Upload your image first. ":"")+(!cu.m?"Pick your phone brand and model. ":""));}
-pkBind($("page-custom"),function(){return cu;},function(){$("cuPk").innerHTML=pk(cu);syncCu();});
+pkBind($("page-custom"),function(){return cu;},function(){$("cuPk").innerHTML=pk(cu);syncCu();setPlat(platOf(cu.b));});
 $("cuFile").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;
  if(!/^image\/(png|jpeg|webp)$/.test(f.type)||f.size>10*1048576){$("cuName").textContent="Please choose a PNG, JPG or WebP image under 10 MB.";e.target.value="";return;}
  if(cu.img)URL.revokeObjectURL(cu.img);cu.img=URL.createObjectURL(f);$("cuName").textContent=f.name;
