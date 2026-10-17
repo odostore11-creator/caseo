@@ -70,6 +70,7 @@ nav a:hover{text-decoration:underline;text-underline-offset:5px}
 .k-clear2 svg{opacity:.78}.k-clear2{border:7px solid var(--f,#ff7ab8);background:repeating-conic-gradient(#fff 0 25%,#e1def0 0 50%) 0 0/16px 16px}
 .card h3{font-size:18px}.card small{display:block}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
+.cph{display:flex;gap:8px;margin-top:10px}.cph img{width:92px;height:92px;object-fit:cover;border-radius:12px;border:2px solid var(--ink);background:#fff}.type .cph img{width:calc(50% - 4px);height:auto;aspect-ratio:1}.type .cph{margin:0 0 8px}
 .chip{padding:7px 15px;border:2px solid var(--ink);border-radius:999px;background:#fff;font-weight:500;font-size:14px}
 .chip.on{background:var(--ink);color:#fff}
 .btn{display:inline-flex;justify-content:center;align-items:center;padding:13px 26px;border-radius:999px;border:2px solid var(--ink);background:var(--blue);color:#fff;font-weight:600;box-shadow:4px 4px 0 var(--ink);transition:transform .12s,box-shadow .12s}
@@ -488,13 +489,21 @@ var BRANDS=[
  {id:"realme",n:"Realme",ar:"ريلمي",m:["Realme 12 Pro","Realme 13 Pro","Realme C67"]},
  {id:"infinix",n:"Infinix",ar:"إنفينكس",m:["Infinix Hot 40","Infinix Note 40","Infinix Smart 8"]},
  {id:"tecno",n:"Tecno",ar:"تكنو",m:["Tecno Spark 20","Tecno Spark 30","Tecno Camon 30"]},
- {id:"honor",n:"Honor",ar:"هونر",m:["Honor 90","Honor X8b"]}
+ {id:"honor",n:"Honor",ar:"هونر",m:["Honor 90","Honor X8b"]},
+ {id:"huawei",n:"Huawei",ar:"هواوي",m:[]},
+ {id:"oneplus",n:"OnePlus",ar:"ون بلس",m:[]},
+ {id:"vivo",n:"Vivo",ar:"فيفو",m:[]}
 ];
 var MODELS=[].concat.apply([],BRANDS.map(function(b){return b.m;}));
+/* Per-case model lists. A case listed here shows ONLY these models; a case not listed falls back to the brand lists above. */
+var CASE_MODELS={clear:{"apple": ["iPhone 17 Pro Max", "iPhone 17 Pro", "iPhone 17 Air", "iPhone 17", "iPhone 16 Pro Max", "iPhone 16 Pro", "iPhone 16 Plus", "iPhone 16", "iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15 Plus", "iPhone 15", "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14 Plus", "iPhone 14", "iPhone 13 Pro Max", "iPhone 13 Pro", "iPhone 13", "iPhone 13 Mini", "iPhone 12 / 12 Pro", "iPhone 12 Pro Max", "iPhone 12 Mini", "iPhone 11 Pro Max", "iPhone 11 Pro", "iPhone 11", "iPhone X/XS", "iPhone XS Max", "iPhone XR", "iPhone 7/8 Plus", "iPhone 7/8", "iPhone 7 SE", "iPhone SE", "iPhone 6s Plus", "iPhone 6 Plus", "iPhone 6/6s"], "huawei": ["Huawei Nova 9"], "oneplus": ["One Plus Nord N200 5G"], "oppo": ["Oppo Reno 14 Pro", "Reno 14", "Reno 13 R", "Reno 12 / 12 Pro", "Reno 11 / 11 Pro", "Reno 11 F", "Reno 10 / 10 Pro", "Reno 9 Pro Plus", "Reno 8T 5G", "Reno 8T", "Reno 8", "Reno 7 5G", "Reno 7", "Reno 6 5G", "Reno 6 4G", "Reno 5 5G", "Reno 5 4G", "Reno 2", "Reno 2P", "Oppo A96 5G", "A96 4G / K9s / K9x", "A95 4G", "A94", "A93 5G / F19 Pro", "A93 5G / 4G", "A78 4G", "A77", "A74 5G", "A74 4G", "A72 (2020)", "A59 / A39", "A58 4G", "A57 5G / 4G", "A53 (2020)", "A43", "Oppo A36", "Oppo A33", "A25 / A25s / A30s", "Oppo F11 Pro"], "realme": ["Realme 11 Pro", "Realme 11", "Realme 8", "Realme 7 Pro", "Realme 7", "Realme GT2 / GT Neo2", "Realme X2 Pro", "Realme C35", "Realme C33", "Realme C30", "Realme C25", "Realme C23", "Realme C21", "Realme C12 / C13"], "xiaomi": ["Xiaomi 14T / 14T Pro", "Xiaomi 13T / 13T Pro", "Xiaomi 12", "Redmi K50", "Redmi K40", "Redmi Note 12 Pro", "Redmi Note 12", "Redmi Note 11T Pro / 11T Pro Plus", "Redmi Note 11 / 11S", "Redmi Note 10 Pro 5G / 10 Pro Max", "Redmi Note 10 5G", "Redmi Note 10 4G / 10S", "Redmi Note 10 Lite", "Redmi Note 9 / 9Pro 4G", "Redmi Note 9 4G / Poco M3", "Redmi Note 8", "Redmi Note 7 / 7Pro / 7s", "Redmi Note 5 Pro", "Redmi 12 5G / Note 12R / Poco M6 Pro", "Redmi 12 4G", "Redmi 12C / 11A", "Redmi 11 / Mi 11", "Redmi 11T / 11T Pro", "Redmi 10 Lite", "Redmi 10 / Note 11 4G", "Redmi 10C", "Redmi 10T", "Redmi 9T / 9T Pro / K30 / K30 Pro", "Redmi 9C", "Redmi 9", "Redmi 8A", "Redmi 8", "Poco F4", "Poco M5 / M4 5G", "Poco M4 / M5 5G", "Poco C61", "Poco C58", "Poco C30"], "samsung": ["Samsung S25 Ultra", "S25 Plus", "S25", "S24 Ultra", "S24 Plus", "S24", "S24 FE", "S23 Ultra", "S23 Plus", "S23", "S23 FE", "S22 Ultra", "S22 Plus", "S22", "S21 Ultra", "S21 Plus", "S21", "S21 FE", "S20 Ultra", "S20 Plus", "S20", "S20 FE", "S10", "Samsung Note 20 Ultra", "Note 20 Plus", "Note 20", "Note 10 Ultra", "Note 10 Plus", "Note 10", "Samsung A74", "A73", "A72", "A71", "A70", "A56", "A55", "A54", "A53", "A52/A52e", "A51", "A50", "Samsung A36", "A35", "A34", "Samsung A33", "A32", "A31", "A30", "A26", "A25", "A24", "A23", "A22", "A21", "A20", "A16", "A15", "A14", "A13", "A12", "A11", "A10/A10s", "A09", "A08", "A07", "A06/A06s", "A05c", "A05", "A04", "A03", "Samsung M51", "Samsung M31"], "vivo": ["Vivo Y55 / Y55s", "Vivo Y37 / Y15 / Y11 / 3", "Vivo Y22 / Y22s", "Vivo Y21T (4G)", "Vivo Y20", "Vivo Y02s"], "infinix": ["Infinix Hot 40", "Infinix Note 40", "Infinix Smart 8"], "tecno": ["Tecno Spark 20", "Tecno Spark 30", "Tecno Camon 30"], "honor": ["Honor 90", "Honor X8b"]},tough:{apple:["iPhone 18 Pro Max", "iPhone 18 Pro", "iPhone 17 Pro Max", "iPhone 17 Pro", "iPhone 17", "iPhone 16 Pro Max", "iPhone 16 Pro", "iPhone 16", "iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15", "iPhone 14 Pro Max", "iPhone 14 Pro", "iPhone 14", "iPhone 13 Pro Max", "iPhone 13 Pro", "iPhone 13", "iPhone 12 Pro Max", "iPhone 12 Pro", "iPhone 12", "iPhone 11 Pro Max", "iPhone 11 Pro", "iPhone 11"],samsung:["Samsung S26 Ultra", "Samsung S25 Ultra", "Samsung S24 Ultra", "Samsung S23 Ultra"]}};
+function mfor(b,k){if(!b)return [];var o=CASE_MODELS[k];return o?(o[b.id]||[]):b.m;}
+function mvalid(k,m){return BRANDS.some(function(b){return mfor(b,k).indexOf(m)>-1;});}
+for(var ck0 in CASE_MODELS)for(var bk0 in CASE_MODELS[ck0])CASE_MODELS[ck0][bk0].forEach(function(m){if(MODELS.indexOf(m)<0)MODELS.push(m);});
 var CASES=[
- {id:"tough",n:"Tough Case",price:449,d:"Opaque, dual-layer protection with the design on the back.",c:"k-tough"},
- {id:"armor",n:"Clear Armor Case",price:299,d:"See-through, with reinforced armored corners and the design on the back.",c:"k-armor"},
- {id:"clear",n:"Clear Case",price:249,d:"Plain and see-through, with the design on the back.",c:"k-clear"}
+ {id:"tough",n:"Tough Case",price:449.99,d:"Opaque, dual-layer protection with the design on the back.",c:"k-tough",img:["case-tough-1","case-tough-2"]},
+ {id:"armor",n:"Clear Armor Case",price:249.99,d:"See-through, with reinforced armored corners and the design on the back.",c:"k-armor",img:["case-armor-1","case-armor-2"]},
+ {id:"clear",n:"Clear Case",price:199.99,d:"Plain and see-through, with the design on the back.",c:"k-clear",img:["case-clear-1"]}
 ];
 var DES=[];for(var i0=0;i0<70;i0++)DES.push({n:"Design "+(i0<9?"0":"")+(i0+1)});
 var FEAT=[0,1,2,3,4,5,6,7];
@@ -537,6 +546,7 @@ wish=(Array.isArray(wish)?wish:[]).filter(function(i){return Number.isInteger(i)
 function isW(i){return wish.indexOf(i)>-1;}
 var RENDERS={};   /* design index (design number minus 1) that has render-NN.webp and render-NN-angle.webp (iPhone renders) */
 var BAG='<svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"/></svg>';
+function cph(c){return '<div class="cph">'+(c.img||[]).map(function(n){return '<img alt="'+esc(c.n)+' example" loading="lazy" src="'+CFG.IMG_BASE+n+'.webp" onerror="this.remove()">';}).join("")+'</div>';}
 function card(i){return '<div class="cw"><button class="heart'+(isW(i)?' on':'')+'" data-w="'+i+'" aria-label="Save to wishlist" aria-pressed="'+isW(i)+'">'+HS+'</button><button class="qa" data-qa="'+i+'" aria-label="Quick add to cart">'+BAG+'</button>'+cardBtn(i)+'</div>';}
 function rimg(i,v){return CFG.IMG_BASE+"render-"+dnum(i)+(v==="angle"?"-angle":"")+".webp";}
 function cardPic(i){if(!RENDERS[i])return '<div class="case">'+pic(i)+'</div>';
@@ -547,7 +557,7 @@ function cardBtn(i){return '<button class="card" data-i="'+i+'">'+cardPic(i)+'<h
 
 /* ===== pages, shop, modal ===== */
 $("featGrid").innerHTML=FEAT.map(card).join("");
-$("types").innerHTML=CASES.map(function(c){return '<div class="type"><div class="case '+c.c+'" style="width:40%"><div class="ph"></div></div><h3 style="margin-top:6px">'+c.n+'</h3><p class="muted" style="margin:6px 0">'+c.d+'</p><b>'+fmt(c.price)+'</b></div>';}).join("");
+$("types").innerHTML=CASES.map(function(c){return '<div class="type">'+cph(c)+'<h3 style="margin-top:6px">'+c.n+'</h3><p class="muted" style="margin:6px 0">'+c.d+'</p><b>'+fmt(c.price)+'</b></div>';}).join("");
 $("aboutCases").innerHTML=CASES.map(function(c){return '<p><b>'+c.n+'</b> ('+fmt(c.price)+'). '+c.d+'</p>';}).join("");
 $("faqList").innerHTML=FAQ.map(function(f){return '<details><summary>'+f[0]+'</summary><p>'+f[1]+'</p></details>';}).join("");
 var CATS=[{id:"egypt",n:"Egypt",ar:"مصر"},{id:"arabic",n:"Arabic",ar:"عربي"},{id:"trendy",n:"Trendy",ar:"ترندي"},{id:"minimal",n:"Minimal",ar:"مينيمال"},{id:"football",n:"Football",ar:"كورة"},{id:"fun",n:"Fun",ar:"مرح"}];
@@ -562,18 +572,18 @@ function markTab(h){[].forEach.call(document.querySelectorAll("#tabbar .tab"),fu
 addEventListener("hashchange",route);route();
 
 var LS={};try{LS=JSON.parse(localStorage.getItem("caseo_last")||"{}")||{};}catch(e){}
-function brandOf(m){for(var j=0;j<BRANDS.length;j++)if(BRANDS[j].m.indexOf(m)>-1)return BRANDS[j].id;return "";}
+function brandOf(m){for(var j=0;j<BRANDS.length;j++){var b0=BRANDS[j];if(b0.m.indexOf(m)>-1)return b0.id;for(var k0 in CASE_MODELS)if((CASE_MODELS[k0][b0.id]||[]).indexOf(m)>-1)return b0.id;}return "";}
 function brand(id){return BRANDS.filter(function(b){return b.id===id;})[0];}
-function lsOK(){return !!(LS&&kase(LS.k)&&MODELS.indexOf(LS.m)>-1);}
+function lsOK(){return !!(LS&&kase(LS.k)&&mvalid(LS.k,LS.m));}
 function saveLS(k,m,b){LS={k:k,m:m,b:b||brandOf(m)};try{localStorage.setItem("caseo_last",JSON.stringify(LS));}catch(e){}}
 function sold(i){var n=+(CFG.SOLD||{})[i];return n>0?n:0;}
 /* brand tiles + model dropdown + model reminder (shared by the product popup and the custom page) */
 function pk(st){var b=brand(st.b);
- var h='<div class="field"><span class="l">Phone brand <span class="ar">ماركة الموبايل</span></span><div class="brands">'+BRANDS.map(function(x){return '<button type="button" class="bt'+(x.id===st.b?' on':'')+'" data-b="'+x.id+'"><b>'+esc(x.n)+'</b><i class="ar">'+x.ar+'</i></button>';}).join("")+'</div></div>';
+ var h='<div class="field"><span class="l">Phone brand <span class="ar">ماركة الموبايل</span></span><div class="brands">'+BRANDS.filter(function(x){return mfor(x,st.k).length;}).map(function(x){return '<button type="button" class="bt'+(x.id===st.b?' on':'')+'" data-b="'+x.id+'"><b>'+esc(x.n)+'</b><i class="ar">'+x.ar+'</i></button>';}).join("")+'</div></div>';
  h+='<div class="field"><label class="l">Phone model <span class="ar">موديل الموبايل</span></label>';
  if(!b)h+='<select disabled><option>Pick a brand first</option></select>';
- else if(!b.m.length)h+='<p class="note">We don\'t list '+esc(b.n)+' models yet. <a style="text-decoration:underline" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I have a "+b.n+" phone. Can you make a case for it?")+'">Ask us on WhatsApp</a></p>';
- else h+='<select data-pm><option value="">Select your model</option>'+b.m.map(function(m){return '<option'+(m===st.m?' selected':'')+'>'+esc(m)+'</option>';}).join("")+'</select>';
+ else if(!mfor(b,st.k).length)h+='<p class="note">We don\'t list '+esc(b.n)+' models yet. <a style="text-decoration:underline" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I have a "+b.n+" phone. Can you make a case for it?")+'">Ask us on WhatsApp</a></p>';
+ else h+='<select data-pm><option value="">Select your model</option>'+mfor(b,st.k).map(function(m){return '<option'+(m===st.m?' selected':'')+'>'+esc(m)+'</option>';}).join("")+'</select>';
  return h+'</div><p class="note warn">Double-check your exact model (Settings → About) before you order. Each case fits one model only. <span class="ar">اتأكد من موديل موبايلك بالظبط من الإعدادات</span></p>';}
 function pkBind(box,get,redraw){box.addEventListener("click",function(e){var t=e.target.closest("[data-b]");if(t){var st=get();st.b=t.getAttribute("data-b");st.m="";redraw();}});
  box.addEventListener("change",function(e){if(e.target.hasAttribute&&e.target.hasAttribute("data-pm")){get().m=e.target.value;redraw();}});}
@@ -583,7 +593,7 @@ function syncAdd(){var ok=!!cur.m;$("addBtn").disabled=!ok;$("mHelp").style.disp
 function drawM(){var d=DES[cur.i],c=kase(cur.k),sc=$("mb").scrollTop;
  $("mb").innerHTML='<button class="x mx" id="mx" aria-label="Close">&times;</button>'+modalPic(cur.i,c)+'<div><p class="muted" style="margin:0">Design <span class="ar">التصميم</span></p><h2 style="font-size:34px;margin:2px 0 6px">'+d.n+'</h2>'+
  (sold(cur.i)?'<p class="sold">'+sold(cur.i)+' sold <span class="ar">اتباع منه '+sold(cur.i)+' قطعة</span></p>':'')+
- '<div class="field" style="margin-top:0"><span class="l">Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cur.k?' on':'')+'" data-k="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p></div>'+
+ '<div class="field" style="margin-top:0"><span class="l">Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cur.k?' on':'')+'" data-k="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p>'+cph(c)+'</div>'+
  '<div id="pkBox">'+pk(cur)+'</div>'+
  '<p style="font-size:24px;font-weight:700;margin:16px 0 10px">'+fmt(c.price*cur.q)+'</p><div class="qty" style="margin:0 0 14px"><button data-qm>−</button>'+cur.q+'<button data-qp>+</button></div>'+
  '<button class="btn full" id="addBtn"'+(cur.m?'':' disabled')+'>Add to cart <span class="ar">أضف للسلة</span></button><p class="help" id="mHelp" style="display:'+(cur.m?'none':'block')+'">Pick your phone brand and model to continue <span class="ar">اختار الماركة والموديل الأول</span></p>'+
@@ -593,7 +603,7 @@ pkBind($("mb"),function(){return cur;},function(){$("pkBox").innerHTML=pk(cur);s
 $("mb").addEventListener("click",function(e){var t=e.target.closest("button");if(!t)return;
  if(t.id==="mx")return $("modal").classList.remove("on");
  if(t.hasAttribute("data-rv")){var v=t.getAttribute("data-rv");$("rimg").src=rimg(cur.i,v);[].forEach.call(t.parentNode.children,function(x){x.classList.toggle("on",x===t);});return;}
- if(t.hasAttribute("data-k")){cur.k=t.getAttribute("data-k");drawM();return;}
+ if(t.hasAttribute("data-k")){cur.k=t.getAttribute("data-k");if(cur.m&&!mvalid(cur.k,cur.m))cur.m="";if(cur.b&&!mfor(brand(cur.b),cur.k).length){cur.b="";cur.m="";}drawM();return;}
  if(t.hasAttribute("data-qm")&&cur.q>1){cur.q--;drawM();return;} if(t.hasAttribute("data-qp")&&cur.q<10){cur.q++;drawM();return;}
  if(t.id==="wishBtn"){toggleW(cur.i);drawM();return;}
  if(t.id==="addBtn"&&cur.m){add(cur.i,cur.k,cur.m,cur.q);saveLS(cur.k,cur.m,cur.b);$("modal").classList.remove("on");toast();}});
@@ -643,7 +653,7 @@ var cu={k:"tough",b:"",m:"",img:""};
 function customNote(){return cart.some(function(c){return c.i===-1;})?'<p class="note warn">Your cart has a custom design. After you place the order, send us your image on WhatsApp so we can start. <span class="ar">بعد الطلب ابعتلنا الصورة على واتساب</span> <a style="text-decoration:underline;font-weight:700" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I ordered a custom design. Sending my image now.")+'">Open WhatsApp</a></p>':"";}
 function drawCu(){var c=kase(cu.k),ok=!!(cu.img&&cu.m);
  $("cuCase").className="case "+c.c;
- $("cuCtl").innerHTML='<div class="field"><span class="l">2 · Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cu.k?' on':'')+'" data-ck="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p></div>'+
+ $("cuCtl").innerHTML='<div class="field"><span class="l">2 · Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cu.k?' on':'')+'" data-ck="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p>'+cph(c)+'</div>'+
   '<div id="cuPk">'+pk(cu)+'</div><p style="font-size:24px;font-weight:700;margin:16px 0 10px">'+fmt(c.price+(+CFG.CUSTOM_FEE||0))+'</p>'+
   '<button class="btn full" id="cuAdd"'+(ok?'':' disabled')+'>Add custom case to cart <span class="ar">أضف للسلة</span></button><p class="help" id="cuHelp" style="display:'+(ok?'none':'block')+'">'+(!cu.img?'Upload your image first. ':'')+(!cu.m?'Pick your phone brand and model. ':'')+'<span class="ar">ارفع الصورة واختار الموديل</span></p>';}
 function syncCu(){var ok=!!(cu.img&&cu.m);$("cuAdd").disabled=!ok;$("cuHelp").style.display=ok?"none":"block";$("cuHelp").firstChild&&($("cuHelp").firstChild.nodeValue=(!cu.img?"Upload your image first. ":"")+(!cu.m?"Pick your phone brand and model. ":""));}
@@ -653,16 +663,16 @@ $("cuFile").addEventListener("change",function(e){var f=e.target.files[0];if(!f)
  if(cu.img)URL.revokeObjectURL(cu.img);cu.img=URL.createObjectURL(f);$("cuName").textContent=f.name;
  var old=$("cuCase").querySelector("img");if(old)old.remove();var im=new Image();im.alt="Your design";im.src=cu.img;$("cuCase").appendChild(im);syncCu();});
 $("page-custom").addEventListener("click",function(e){var t=e.target.closest("button");if(!t)return;
- if(t.hasAttribute("data-ck")){cu.k=t.getAttribute("data-ck");drawCu();return;}
+ if(t.hasAttribute("data-ck")){cu.k=t.getAttribute("data-ck");if(cu.m&&!mvalid(cu.k,cu.m))cu.m="";if(cu.b&&!mfor(brand(cu.b),cu.k).length){cu.b="";cu.m="";}drawCu();return;}
  if(t.id==="cuAdd"&&cu.img&&cu.m){add(-1,cu.k,cu.m,1);saveLS(cu.k,cu.m,cu.b);toast();
   $("cuDone").innerHTML='<p class="note warn"><b>Added to your cart.</b> Now send us your image on WhatsApp so we can check it. <span class="ar">ابعتلنا الصورة على واتساب</span><br><a class="btn full" style="margin-top:10px" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I just added a custom design ("+kase(cu.k).n+", "+cu.m+"). Sending my image now.")+'">Send your image on WhatsApp</a></p>';}});
-function cuSync(){if(!cu.b&&LS.b)cu.b=LS.b;if(!cu.m&&lsOK()&&brandOf(LS.m)===cu.b)cu.m=LS.m;drawCu();}
+function cuSync(){if(!cu.b&&LS.b)cu.b=LS.b;if(!cu.m&&lsOK()&&brandOf(LS.m)===cu.b&&mvalid(cu.k,LS.m))cu.m=LS.m;drawCu();}
 cuSync();
 
 /* ===== cart ===== */
 var cart=[];try{cart=JSON.parse(localStorage.getItem("caseo_cart")||"[]");}catch(e){}
 var esc=function(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});};
-cart=(Array.isArray(cart)?cart:[]).filter(function(c){return c&&kase(c.k)&&Number.isInteger(c.i)&&(c.i===-1||DES[c.i])&&MODELS.indexOf(c.m)>-1;}).map(function(c){return{i:c.i,k:c.k,m:c.m,q:Math.max(1,Math.min(20,Math.floor(+c.q)||1))};});
+cart=(Array.isArray(cart)?cart:[]).filter(function(c){return c&&kase(c.k)&&Number.isInteger(c.i)&&(c.i===-1||DES[c.i])&&mvalid(c.k,c.m);}).map(function(c){return{i:c.i,k:c.k,m:c.m,q:Math.max(1,Math.min(20,Math.floor(+c.q)||1))};});
 function save(){try{localStorage.setItem("caseo_cart",JSON.stringify(cart));}catch(e){}renderCart();}
 function add(i,k,m,q){var h=cart.filter(function(c){return c.i===i&&c.k===k&&c.m===m;})[0];if(h)h.q=Math.min(20,h.q+q);else cart.push({i:i,k:k,m:m,q:Math.min(20,q)});save();}
 function nm(c){return c.i===-1?"Custom design":DES[c.i].n;}
