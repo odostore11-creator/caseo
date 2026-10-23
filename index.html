@@ -336,6 +336,27 @@ html:not([data-plat="android"]) .case:has(.cam){-webkit-mask-image:url("data:ima
 html[data-plat="android"] .case:has(.cam){-webkit-mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M10.92 21.45 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 47.4 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 73.3 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z%22/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 210%22 preserveAspectRatio=%22none%22%3E%3Cpath fill-rule=%22evenodd%22 d=%22M0 0H100V210H0Z M10.92 21.45 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 47.4 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z M10.92 73.3 a10.08 10.08 0 1 0 20.16 0 a10.08 10.08 0 1 0 -20.16 0 Z%22/%3E%3C/svg%3E");-webkit-mask-size:100% 100%;mask-size:100% 100%}
 html:not([data-plat="android"]) .cam{left:9%;top:4.5%;width:40%;height:19%;background:none;border-radius:26%;box-shadow:0 0 0 2px #15130f,0 0 0 5px rgba(21,19,15,.14);filter:none}
 html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-image:url("data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 315%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%22158%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2244%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-width=%224%22/%3E%3Ccircle cx=%2250%22 cy=%22266%22 r=%2247%22 fill=%22none%22 stroke=%22%2315130f%22 stroke-opacity=%22.14%22 stroke-width=%223%22/%3E%3C/svg%3E");background-repeat:no-repeat;background-size:100% 100%;box-shadow:none;border-radius:0;filter:none}
+
+/* ---- perf fixes (phones): no per-card blur, no per-card masks, stable hero height ---- */
+.stick{height:100vh;height:100svh}
+.heart{-webkit-backdrop-filter:none;backdrop-filter:none}
+.tabbar{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.rcase img.r{filter:none}
+@media(max-width:900px){
+ html:not([data-plat="android"]) .case:has(.cam),html[data-plat="android"] .case:has(.cam){-webkit-mask-image:none;mask-image:none}
+ header.scrolled{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+ .card,.ct2{transition:none}
+}
+/* ---- your ongoing orders ---- */
+.ord-card{border:2px solid var(--ink);border-radius:20px;background:#fff;box-shadow:5px 5px 0 var(--ink);padding:18px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px}
+.ord-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600}
+.ord-pill{background:var(--y);border:2px solid var(--ink);border-radius:999px;padding:1px 12px;font-size:12px;font-weight:700}
+.ord-thumbs{display:flex;gap:8px;align-items:center}
+.ord-thumb{width:52px;height:64px;border:2px solid var(--ink);border-radius:10px;background:#e9e5dc;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+.ord-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.ord-actions{display:flex;gap:10px;flex-wrap:wrap}.ord-actions .btn{padding:10px 18px;font-size:13px}
+.ord-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1.5px solid rgba(21,19,15,.2);font-size:14px}.ord-row small{display:block;color:#625e56}
+.mb.om{grid-template-columns:1fr;max-width:520px}
 </style>
 </head>
 <body>
@@ -356,6 +377,7 @@ html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-
     <canvas id="gl"></canvas><img id="heroImg" class="heroimg" alt=""><div class="heroar"><span class="ar">مصمم ليحميك</span></div><div class="cue">Scroll to flip it <span class="ar">· اسحب لتقلب الجراب</span></div>
   </div></div>
   <div class="mq" aria-hidden="true"><div id="mqIn"></div></div>
+  <section id="ongoingOrders" style="display:none;padding:50px 0 0"><div class="wrap"><div class="hd"><h2><span class="ar st">طلبك الحالي</span>Your ongoing order</h2></div><div id="ongoingList"></div></div></section>
   <div class="blk" style="padding-bottom:0"><div class="wrap"><div class="band"><div><h2><span class="ar st">عايز تصميمك انت؟</span>Want your own artwork?</h2><p>Upload any image, pick your case and phone, and we'll print it. We check every custom order with you on WhatsApp first.</p>
     <div class="steps3"><span>1 · Upload <i class="ar">ارفع</i></span><span>2 · Pick your phone <i class="ar">اختار موبايلك</i></span><span>3 · We print <i class="ar">احنا نطبع</i></span></div>
     <a class="btn" href="#custom">Upload your design <span class="ar">ارفع تصميمك</span></a><a class="btn alt" id="waCustom" target="_blank" rel="noopener">Ask on WhatsApp <span class="ar">اسأل واتساب</span></a></div></div></div></div>
@@ -404,6 +426,7 @@ html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-
 
 <section class="page" id="page-cart"><div class="pg"><div class="wrap">
   <h1>Your cart <span class="ar st">سلتك</span></h1>
+  <div class="note warn" id="editBanner" style="display:none;margin-bottom:16px">Editing order <b id="editRef"></b>. Change quantities or add designs from the shop, then send the update with the button at the bottom. <button type="button" class="copy" data-ord-cancel>Cancel editing</button></div>
   <div class="cartgrid"><div id="lines" class="box"></div>
 
     <div id="checkout" class="box" style="display:none">
@@ -419,7 +442,7 @@ html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-
         <div class="field"><label class="l">WhatsApp number <span class="ar">رقم واتساب</span></label><input type="tel" name="whatsapp" required placeholder="If different from phone number"></div>
         <div class="field"><label class="l">Delivery address <span class="ar">عنوان التوصيل</span></label><textarea name="address" required rows="2"></textarea></div>
         <div class="field"><label class="l">City <span class="ar">المدينة</span></label><input name="city" required></div>
-        <div class="field"><label class="l">Payment method <span class="ar">طريقة الدفع</span></label><p style="margin:0 0 8px">Amount to send: <b id="payAmt"></b></p><div id="pay"></div></div>
+        <div class="field"><label class="l">Payment method <span class="ar">طريقة الدفع</span></label><p style="margin:0 0 8px"><span id="payLbl">Amount to send:</span> <b id="payAmt"></b></p><div id="pay"></div></div>
         <div class="field"><label class="l">Notes (anything else) <span class="ar">ملاحظات</span></label><textarea name="notes" rows="2"></textarea></div>
         <div class="field"><button class="btn full" id="placeBtn" type="submit">Place order · تأكيد الطلب</button></div><p class="msg" id="orderMsg" role="status"></p>
       </form>
@@ -467,6 +490,7 @@ html[data-plat="android"] .cam{left:9%;top:4.5%;width:24%;height:36%;background-
 <a class="wafab" id="waFab" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg></a>
 <div class="toast" id="toast" role="status" aria-live="polite"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Product added to cart <i class="ar">تمت الإضافة للسلة</i></span><a href="#cart">View cart <i class="ar">شوف السلة</i></a></div>
 <div class="cur dot" id="cDot"></div><div class="cur ring" id="cRing"></div>
+<div class="modal" id="orderModal"><div class="mb om" id="orderModalBody"></div></div>
 <div class="modal" id="modal"><div class="mb" id="mb"></div></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -545,7 +569,7 @@ function dnum(i){return (i<9?"0":"")+(i+1);}
 function dsrc(n){return CFG.IMG_BASE+"design-"+n+((curPlat==="android"&&!noAnd[n])?"-android":"")+".webp";}
 function imgFail(el){var n=el.getAttribute("data-d");if(/-android\.webp$/.test(el.getAttribute("src"))){noAnd[n]=1;el.src=dsrc(n);}else el.remove();}
 function setPlat(p){curPlat=p;document.documentElement.setAttribute("data-plat",p);[].forEach.call(document.querySelectorAll("img[data-d]"),function(im){var n=im.getAttribute("data-d"),u=dsrc(n);if(im.getAttribute("src")!==u)im.src=u;});}
-function pic(i){var n=dnum(i);return '<div class="ph"></div><img alt="" data-d="'+n+'" src="'+dsrc(n)+'" onerror="imgFail(this)"><span class="cam"></span>';}
+function pic(i){var n=dnum(i);return '<div class="ph"></div><img alt="" data-d="'+n+'" loading="lazy" decoding="async" src="'+dsrc(n)+'" onerror="imgFail(this)"><span class="cam"></span>';}
 var HS='<svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 var wish=[];try{wish=JSON.parse(localStorage.getItem("caseo_wish")||"[]");}catch(e){}
 wish=(Array.isArray(wish)?wish:[]).filter(function(i){return Number.isInteger(i)&&DES[i];});
@@ -645,7 +669,7 @@ function drawRV(){[].forEach.call(document.querySelectorAll(".rvbox"),function(b
 (function(){var parts=["Free delivery across Egypt|توصيل مجاني لكل مصر","70 designs|٧٠ تصميم","Telda · InstaPay · Vodafone Cash|تيلدا · إنستاباي · فودافون كاش","We confirm every order on WhatsApp|بنأكد كل طلب على واتساب"];
  var one=parts.map(function(p){var x=p.split("|");return '<span>'+x[0]+'</span><span class="ar">'+x[1]+'</span>';}).join("");$("mqIn").innerHTML=one+one+one+one;})();
 $("homeBrands").innerHTML=BRANDS.map(function(x){return '<button type="button" class="bt" data-hb="'+x.id+'"><b>'+esc(x.n)+'</b><i class="ar">'+x.ar+'</i></button>';}).join("");
-function drawCats(){$("catTiles").innerHTML=CATS.map(function(c,j){return '<button class="ct2 t'+(j%4)+'" data-cat="'+c.id+'"><img alt="" src="'+CFG.IMG_BASE+'cat-'+c.id+'.webp" onerror="this.remove();" onload="this.parentNode.classList.add(\'hasimg\')"><span class="ar">'+c.ar+'</span><b>'+c.n+'</b></button>';}).join("");}
+function drawCats(){$("catTiles").innerHTML=CATS.map(function(c,j){return '<button class="ct2 t'+(j%4)+'" data-cat="'+c.id+'"><img alt="" loading="lazy" decoding="async" src="'+CFG.IMG_BASE+'cat-'+c.id+'.webp" onerror="this.remove();" onload="this.parentNode.classList.add(\'hasimg\')"><span class="ar">'+c.ar+'</span><b>'+c.n+'</b></button>';}).join("");}
 drawCats();
 function drawShopFor(){var b=brand(LS.b);$("shopFor").innerHTML=b?'<span class="chip on">Shopping for <b>'+esc(b.n)+'</b> <span class="ar">بتتسوق لموبايل '+b.ar+'</span> <button type="button" data-clearb style="background:none;border:0;font-weight:700;text-decoration:underline">change</button></span>':"";}
 document.addEventListener("click",function(e){
@@ -706,18 +730,72 @@ function post(f,btn,msg,label,ok){if(Date.now()-lastPost<15000){msg.textContent=
  fetch("https://api.web3forms.com/submit",{method:"POST",headers:{Accept:"application/json"},body:new FormData(f)}).then(function(r){return r.json();})
  .then(function(j){if(!j.success)throw 0;ok();}).catch(function(){msg.textContent="That didn't send. Check your connection and try again.";})
  .then(function(){btn.disabled=false;btn.textContent=label;});}
-$("orderForm").addEventListener("submit",function(e){e.preventDefault();var id="CS-"+Date.now().toString(36).toUpperCase().slice(-6);
- $("fId").value=id;$("fTotal").value=fmt(total());
- $("fDetails").value=cart.map(function(c){return (c.i===-1?"CUSTOM DESIGN (customer sends the image on WhatsApp)":DES[c.i].n+" #"+dnum(c.i))+" ("+kase(c.k).n+", "+c.m+") x"+c.q+" — "+fmt(pr(c)*c.q);}).join(" | ");
- post(e.target,$("placeBtn"),$("orderMsg"),"Place order · تأكيد الطلب",function(){cart=[];save();e.target.reset();$("lines").innerHTML='<p class="empty"><b>Order '+esc(id)+' placed.</b><br>We will message you on WhatsApp to confirm.</p>';$("checkout").style.display="none";});});
+var PLACE_LABEL=$("placeBtn").textContent;
+$("orderForm").addEventListener("submit",function(e){e.preventDefault();if(!cart.length)return;
+ var f=e.target,ed=getOrder(editingRef),id=ed?ed.ref:"CS-"+Date.now().toString(36).toUpperCase().slice(-6),snap=snapOrder(id,ed);
+ var lines=cart.map(function(c){return (c.i===-1?"CUSTOM DESIGN (customer sends the image on WhatsApp)":DES[c.i].n+" #"+dnum(c.i))+" ("+kase(c.k).n+", "+c.m+") x"+c.q+" — "+fmt(pr(c)*c.q);});
+ $("fId").value=id;$("fTotal").value=fmt(total())+(ed?" | previous total "+fmt(ed.total)+", extra to pay "+fmt(Math.max(0,total()-ed.total)):"");
+ f.elements.subject.value=ed?"Caseo order UPDATE "+id:"New Caseo Order";
+ $("fDetails").value=(ed?"[UPDATE TO ORDER "+id+" — revised full list replaces the earlier one] "+diffText(ed,snap)+" || ":"[NEW ORDER "+id+"] ")+lines.join(" | ");
+ post(f,$("placeBtn"),$("orderMsg"),ed?"Send order update":PLACE_LABEL,function(){finishOrder(snap,ed);f.reset();
+  $("lines").innerHTML='<p class="empty"><b>Order '+esc(id)+(ed?' updated.':' placed.')+'</b><br>We will message you on WhatsApp to confirm. You can view or edit it from the home page.</p>';$("checkout").style.display="none";});});
 $("contactForm").addEventListener("submit",function(e){e.preventDefault();post(e.target,e.target.querySelector("button"),$("contactMsg"),"Send message · ابعت رسالة",function(){$("contactMsg").textContent="Message sent. We'll reply soon.";e.target.reset();});});
 renderCart();
+
+/* ===== ongoing orders: saved on this device, shown on Home, editable (sent to us as an UPDATE to the same order) ===== */
+var OTTL=45*864e5,orders=[];try{orders=JSON.parse(localStorage.getItem("caseo_orders")||"[]");}catch(e){}
+orders=(Array.isArray(orders)?orders:[]).filter(function(o){return o&&o.ref&&Array.isArray(o.items)&&(Date.now()-(o.upd||o.at||0))<OTTL;}).map(function(o){o.items=o.items.filter(function(c){return c&&kase(c.k)&&(c.i===-1||DES[c.i]);});return o;}).filter(function(o){return o.items.length;}).slice(0,3);
+var editingRef=null;try{editingRef=localStorage.getItem("caseo_editing")||null;}catch(e){}
+function getOrder(r){return r?orders.filter(function(o){return o.ref===r;})[0]:null;}
+if(editingRef&&!getOrder(editingRef)){editingRef=null;try{localStorage.removeItem("caseo_editing");localStorage.removeItem("caseo_cart_stash");}catch(e){}}
+function saveOrders(){try{localStorage.setItem("caseo_orders",JSON.stringify(orders));}catch(e){}drawOrders();}
+function snapOrder(id,ed){var F=$("orderForm").elements,v=function(n){return F[n]?F[n].value.trim():"";},pay=$("orderForm").querySelector('input[name="payment"]:checked');
+ return{ref:id,at:ed?ed.at:Date.now(),upd:Date.now(),rev:ed?(ed.rev||0)+1:0,total:total(),items:cart.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q};}),
+  cust:{name:v("name"),email:v("email"),phone:v("phone"),whatsapp:v("whatsapp"),address:v("address"),city:v("city"),payment:pay?pay.value:""}};}
+function ikey(c){return c.i+"|"+c.k+"|"+c.m;}
+function ilabel(c){return nm(c)+" ("+kase(c.k).n+", "+c.m+")";}
+function diffText(o,n){var om={},nn={},out=[];o.items.forEach(function(c){om[ikey(c)]=c;});n.items.forEach(function(c){nn[ikey(c)]=c;});
+ n.items.forEach(function(c){var x=om[ikey(c)];if(!x)out.push("ADDED "+ilabel(c)+" x"+c.q);else if(x.q!==c.q)out.push("QTY "+ilabel(c)+" "+x.q+" -> "+c.q);});
+ o.items.forEach(function(c){if(!nn[ikey(c)])out.push("REMOVED "+ilabel(c));});
+ return "CHANGES: "+(out.length?out.join("; "):"contact details only");}
+function exitEdit(){var st=[];try{st=JSON.parse(localStorage.getItem("caseo_cart_stash")||"[]");}catch(e){}cart=Array.isArray(st)?st:[];editingRef=null;try{localStorage.removeItem("caseo_editing");localStorage.removeItem("caseo_cart_stash");}catch(e){}}
+function finishOrder(snap,ed){if(ed){orders[orders.indexOf(ed)]=snap;exitEdit();}else{orders.unshift(snap);orders=orders.slice(0,3);cart=[];}save();saveOrders();}
+function startEdit(ref){var o=getOrder(ref);if(!o)return;if(editingRef&&editingRef!==ref)exitEdit();
+ if(!editingRef){try{localStorage.setItem("caseo_cart_stash",JSON.stringify(cart));}catch(e){}}
+ editingRef=ref;try{localStorage.setItem("caseo_editing",ref);}catch(e){}
+ cart=o.items.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q};});
+ var c=o.cust||{},F=$("orderForm").elements;["name","email","phone","whatsapp","address","city"].forEach(function(n){if(F[n])F[n].value=c[n]||"";});if(F.notes)F.notes.value="";
+ var r=$("orderForm").querySelector('input[name="payment"][value="'+(c.payment||"")+'"]');if(r)r.checked=true;
+ save();drawOrders();location.hash="#cart";}
+function cancelEdit(){exitEdit();$("orderForm").reset();save();drawOrders();}
+function syncEdit(){var o=getOrder(editingRef),t=total(),amt=o?Math.max(0,t-o.total):t,b=$("editBanner");
+ b.style.display=o?"block":"none";if(o)$("editRef").textContent=o.ref;
+ $("payLbl").textContent=o?"Additional amount to send:":"Amount to send:";$("payAmt").textContent=fmt(amt);
+ var pb=$("placeBtn");if(!pb.disabled)pb.textContent=o?"Send order update":PLACE_LABEL;}
+var _rc=renderCart;renderCart=function(){_rc();syncEdit();};
+function odate(t){return new Date(t).toLocaleDateString("en-GB",{day:"numeric",month:"short"});}
+function drawOrders(){var sec=$("ongoingOrders"),box=$("ongoingList");if(!orders.length){sec.style.display="none";return;}sec.style.display="";
+ box.innerHTML=orders.map(function(o){var n=o.items.reduce(function(s,c){return s+c.q;},0),isEd=o.ref===editingRef;
+  var th=o.items.slice(0,4).map(function(c){return '<span class="ord-thumb">'+(c.i===-1?'Custom':'<img alt="" loading="lazy" decoding="async" src="'+dsrc(dnum(c.i))+'" onerror="this.remove()">')+'</span>';}).join("")+(o.items.length>4?'<span class="ord-thumb">+'+(o.items.length-4)+'</span>':"");
+  return '<div class="ord-card"><div class="ord-top"><span>Order '+esc(o.ref)+', placed '+odate(o.at)+(o.rev?', updated '+odate(o.upd):"")+'</span><span class="ord-pill">'+(isEd?"Editing":"Ongoing")+'</span></div><div class="ord-thumbs">'+th+'</div><div>'+n+(n===1?" item":" items")+', <b>'+fmt(o.total)+'</b></div><div class="ord-actions"><button type="button" class="btn alt" data-ord-view="'+esc(o.ref)+'">View details</button>'+(isEd?'<button type="button" class="btn" data-ord-resume>Continue editing</button><button type="button" class="btn alt" data-ord-cancel>Cancel edit</button>':'<button type="button" class="btn" data-ord-edit="'+esc(o.ref)+'">Edit order</button>')+'</div></div>';}).join("");}
+function viewOrder(ref){var o=getOrder(ref);if(!o)return;var c=o.cust||{};
+ var rows=o.items.map(function(it){return '<div class="ord-row"><span>'+esc(nm(it))+'<small>'+esc(kase(it.k).n)+', '+esc(it.m)+', x'+it.q+'</small></span><span>'+fmt(pr(it)*it.q)+'</span></div>';}).join("");
+ $("orderModalBody").innerHTML='<button class="x mx" id="omx" aria-label="Close">&times;</button><div><h3 style="margin:0 0 4px">Order '+esc(o.ref)+'</h3><p class="muted" style="margin:0 0 14px">Placed '+odate(o.at)+(o.rev?', updated '+odate(o.upd):"")+'</p>'+rows+'<div class="ord-row"><span>Delivery</span><span>Free</span></div><div class="ord-row" style="font-size:17px"><b>Total</b><b>'+fmt(o.total)+'</b></div><p style="margin:16px 0 4px"><b>'+esc(c.name||"")+'</b>, '+esc(c.phone||"")+'<br>'+esc(c.address||"")+', '+esc(c.city||"")+'<br>Paid via '+esc(c.payment||"-")+'</p><p class="muted" style="margin:10px 0 16px">We confirm every order with you on WhatsApp. Changes are sent to us as an update to the same order.</p><div class="ord-actions"><button type="button" class="btn" data-ord-edit="'+esc(o.ref)+'">Edit order</button></div></div>';
+ $("orderModal").classList.add("on");}
+$("orderModal").addEventListener("click",function(e){if(e.target===$("orderModal")||e.target.id==="omx")$("orderModal").classList.remove("on");});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")$("orderModal").classList.remove("on");});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest("[data-ord-view],[data-ord-edit],[data-ord-resume],[data-ord-cancel]");if(!b)return;
+ if(b.hasAttribute("data-ord-view"))viewOrder(b.getAttribute("data-ord-view"));
+ else if(b.hasAttribute("data-ord-edit")){$("orderModal").classList.remove("on");startEdit(b.getAttribute("data-ord-edit"));}
+ else if(b.hasAttribute("data-ord-resume"))location.hash="#cart";
+ else cancelEdit();});
+renderCart();drawOrders();
 
 /* ===== raindrops running down the wall (light: ~12 moving drops, sprite-drawn, pauses off-screen) ===== */
 (function(){
  var hero=$("hero"),ct=$("rt"),ch=$("rh"),a=ct.getContext("2d"),b=ch.getContext("2d");
  var still=matchMedia("(prefers-reduced-motion: reduce)").matches;
- var W=0,H=0,drops=[],beads=[],fr=0,last=0;
+ var W=0,H=0,drops=[],beads=[],fr=0,last=0,tk=0;
  var sp=document.createElement("canvas");sp.width=sp.height=48;var g=sp.getContext("2d");g.translate(24,24);
  var rg=g.createRadialGradient(2,3,4,0,0,20);
  rg.addColorStop(0,"rgba(110,108,104,.35)");rg.addColorStop(.6,"rgba(62,60,57,.62)");rg.addColorStop(.9,"rgba(24,23,21,.9)");rg.addColorStop(1,"rgba(24,23,21,0)");
@@ -729,7 +807,6 @@ renderCart();
   [ct,ch].forEach(function(c){c.width=W*sc;c.height=H*sc;c.getContext("2d").setTransform(sc,0,0,sc,0,0);});
   drops=[];for(var i=0;i<(W<700?12:24);i++)drops.push(mk(false));
   beads=[];for(i=0;i<(W<700?40:84);i++)beads.push({x:Math.random()*W,y:Math.random()*H,r:1.4+Math.random()*2});}
- addEventListener("resize",size);
  function draw(t){
   var dt=Math.min((t-last)/16.7||1,3);last=t;fr++;
   if(fr%3===0){a.globalCompositeOperation="destination-out";a.fillStyle="rgba(0,0,0,.035)";a.fillRect(0,0,W,H);a.globalCompositeOperation="source-over";}
@@ -749,21 +826,21 @@ renderCart();
  }
  (function loop(t){
   if(ct.clientWidth!==W)size();
-  if(W&&hero.offsetParent){var r=hero.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight)draw(t);else last=t;}
+  if(W&&hero.offsetParent){var r=hero.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){if(W>=700||(++tk&1))draw(t);}else last=t;}
   if(!still||fr<2)requestAnimationFrame(loop);
  })(0);
 })();
 
 /* ===== hero phone: 2D rotation, 180 degrees clockwise on scroll ===== */
 (function(){
- var cv=$("gl"),hero=$("hero");
+ var cv=$("gl"),hero=$("hero"),stickEl=hero.firstElementChild;
  if(CFG.HERO_IMG){var im=$("heroImg"),ok=false;im.onload=function(){ok=true;cv.style.display="none";im.style.display="block";};im.src=CFG.HERO_IMG;
   var cc=0,st=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  (function lp(t){if(ok&&hero.offsetParent){var r=hero.getBoundingClientRect(),p=Math.max(0,Math.min(1,-r.top/(hero.offsetHeight-innerHeight)));cc+=((st?0:p)-cc)*.1;
+  (function lp(t){if(ok&&hero.offsetParent){var r=hero.getBoundingClientRect(),p=Math.max(0,Math.min(1,-r.top/(hero.offsetHeight-stickEl.offsetHeight)));cc+=((st?0:p)-cc)*.1;
    im.style.transform="translate(-50%,calc(-50% + "+(st?0:Math.sin(t/1100)*4)+"px)) rotate("+(cc*180)+"deg)";}requestAnimationFrame(lp);})(0);
   if(ok||im.complete&&im.naturalWidth)return;}
  if(!window.THREE){cv.style.display="none";return;}
- var CASE_ROT_Y=Math.PI/2;var T=THREE,R=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true});R.setPixelRatio(Math.min(devicePixelRatio,2));
+ var CASE_ROT_Y=Math.PI/2;var SM=innerWidth<700,DPR=Math.min(devicePixelRatio||1,SM?1.5:2),T=THREE,R=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:DPR<2});R.setPixelRatio(DPR);
  var S=new T.Scene(),cam=new T.PerspectiveCamera(32,1,.1,50);cam.position.set(0,0,10);
  S.add(new T.HemisphereLight(0xffffff,0xd8d2c8,.9));
  var key=new T.DirectionalLight(0xffffff,.9);key.position.set(3,4,6);S.add(key);
@@ -792,14 +869,17 @@ S.add(ph);
    m.traverse(function(o){if(o.isMesh&&o.material){o.material.envMapIntensity=.7;o.material.side=T.FrontSide;}});
    S.children.forEach(function(o){if(o.isHemisphereLight)o.intensity=.25;else if(o.isDirectionalLight)o.intensity*=.55;});
    R.toneMappingExposure=.9;
-   while(ph.children.length)ph.remove(ph.children[0]);ph.add(pv);
+   while(ph.children.length)ph.remove(ph.children[0]);ph.add(pv);dirty=0;
   },function(){});
  }catch(err){}}
- function size(){var w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<700?12.2:10;cam.updateProjectionMatrix();}
- addEventListener("resize",size);size();
- var c=0,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
- (function loop(t){if(hero.offsetParent){var r=hero.getBoundingClientRect(),p=Math.max(0,Math.min(1,-r.top/(hero.offsetHeight-innerHeight)));
-  c+=((still?0:p)-c)*.1;ph.rotation.z=-c*Math.PI;ph.position.y=still?0:Math.sin(t/1100)*.05;R.render(S,cam);}requestAnimationFrame(loop);})(0);
+ function size(){var w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<700?12.2:10;cam.updateProjectionMatrix();dirty=0;}
+ var LW=innerWidth;addEventListener("resize",function(){if(innerWidth!==LW){LW=innerWidth;size();}});size();
+ var lc=-1,lb=0,dirty=0,c=0,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ (function loop(t){if(hero.offsetParent){var r=hero.getBoundingClientRect();
+  if(r.bottom>0&&r.top<innerHeight){var p=Math.max(0,Math.min(1,-r.top/(hero.offsetHeight-stickEl.offsetHeight))),tg=still?0:p,by=(still||SM)?0:Math.sin(t/1100)*.05;
+   c+=(tg-c)*.1;if(Math.abs(tg-c)<.0004)c=tg;
+   if(!dirty||c!==lc||by!==lb){ph.rotation.z=-c*Math.PI;ph.position.y=by;R.render(S,cam);lc=c;lb=by;dirty=1;}}}
+  requestAnimationFrame(loop);})(0);
 })();
 
 /* ===== cursor: a glass raindrop that trails the pointer, swells over things you can tap, ripples on click ===== */
