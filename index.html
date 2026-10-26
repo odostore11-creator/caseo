@@ -851,13 +851,14 @@ renderCart();drawOrders();
  var lm=new T.MeshStandardMaterial({color:0x0c0c0c,roughness:.15,metalness:.8});
  [[-.52,1.26],[-.24,1.26],[-.38,.98]].forEach(function(p){var l=new T.Mesh(new T.CylinderGeometry(.1,.1,.06,24),lm);l.rotation.x=Math.PI/2;l.position.set(p[0],p[1],.2);ph.add(l);});
 S.add(ph);
+ var rebuildEnv=null;
  /* ---- real model: leather case from caseo-model.js replaces the placeholder once it has loaded ---- */
  if(window.CASEO_GLB&&T.GLTFLoader){try{
   R.outputEncoding=T.sRGBEncoding;R.toneMapping=T.ACESFilmicToneMapping;R.toneMappingExposure=1.05;
   var pm=new T.PMREMGenerator(R),es=new T.Scene();
   es.add(new T.Mesh(new T.BoxGeometry(20,20,20),new T.MeshBasicMaterial({color:0xcfcac0,side:T.BackSide})));
   [[0,9.5,0,12,12,0],[-9.5,0,2,10,10,1],[9.5,0,-2,6,10,2]].forEach(function(l){var pl=new T.Mesh(new T.PlaneGeometry(l[3],l[4]),new T.MeshBasicMaterial({color:0xffffff,side:T.DoubleSide}));pl.position.set(l[0],l[1],l[2]);pl.lookAt(0,0,0);pl.material.color.multiplyScalar(3);es.add(pl);});
-  S.environment=pm.fromScene(es,.04).texture;
+  S.environment=pm.fromScene(es,.04).texture;rebuildEnv=function(){S.environment=pm.fromScene(es,.04).texture;};
   var raw=atob(CASEO_GLB.split(",")[1]),u8=new Uint8Array(raw.length);for(var q=0;q<raw.length;q++)u8[q]=raw.charCodeAt(q);
   new T.GLTFLoader().parse(u8.buffer,"",function(g){
    var m=g.scene;m.updateMatrixWorld(true);
@@ -871,9 +872,14 @@ S.add(ph);
   },function(){});
  }catch(err){}}
  function size(){var w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);cam.aspect=w/h;cam.position.z=w<700?12.2:10;cam.updateProjectionMatrix();dirty=0;}
+ /* keep the phone alive: the browser can drop the WebGL context when the tab sits in the background */
+ cv.addEventListener("webglcontextlost",function(e){e.preventDefault();});
+ cv.addEventListener("webglcontextrestored",function(){setTimeout(function(){if(rebuildEnv){try{rebuildEnv();}catch(x){}}size();},60);});
+ document.addEventListener("visibilitychange",function(){if(!document.hidden)dirty=0;});
+ addEventListener("pageshow",function(){dirty=0;});
  var LW=innerWidth;addEventListener("resize",function(){if(innerWidth!==LW){LW=innerWidth;size();}});size();
- var lc=-1,lb=0,dirty=0,c=0,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
- (function loop(t){if(hero.offsetParent){var r=hero.getBoundingClientRect();
+ var lc=-1,lb=0,dirty=0,hid=0,c=0,still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ (function loop(t){if(!hero.offsetParent)hid=1;else if(hid){hid=0;size();}if(hero.offsetParent){var r=hero.getBoundingClientRect();
   if(r.bottom>0&&r.top<innerHeight){var p=Math.max(0,Math.min(1,-r.top/(hero.offsetHeight-stickEl.offsetHeight))),tg=still?0:p,by=(still||SM)?0:Math.sin(t/1100)*.05;
    c+=(tg-c)*.1;if(Math.abs(tg-c)<.0004)c=tg;
    if(!dirty||c!==lc||by!==lb){ph.rotation.z=-c*Math.PI;ph.position.y=by;R.render(S,cam);lc=c;lb=by;dirty=1;}}}
