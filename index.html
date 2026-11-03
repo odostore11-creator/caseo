@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' blob: https://api.web3forms.com https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -501,7 +501,8 @@ var CFG={
   WEB3FORMS_KEY:"c256a4c4-f82f-4497-b84e-d465be6d74cf",   /* same Web3Forms key as Odos: emails arrive in the Odos inbox, subjects say "Caseo" */
   WHATSAPP:"201556059711",
   HERO_IMG:"",   /* optional: transparent PNG/WebP of the phone back (straight on). If set, it replaces the 3D placeholder. */
-  IMG_BASE:"images/",   /* folder next to index.html: design-01.webp ... design-68.webp, cat-egypt.webp ... */
+  IMG_BASE:"https://caseo-images.omardirty999.workers.dev/",   /* folder next to index.html: design-01.webp ... design-68.webp, cat-egypt.webp ... After the Cloudflare images Worker is up, set this to its link with a slash at the end, e.g. "https://caseo-images.yourname.workers.dev/" */
+  API:"",   /* your Caseo API Worker link, no slash at the end, e.g. "https://caseo-api.yourname.workers.dev". Leave empty to keep using Web3Forms only. */
   PAY:{"Telda":"@omarkhaled156","InstaPay":"@omarkhaled2611","Vodafone Cash":"01064856698","Cash on Delivery":""},
   INSTAPAY_QR:"https://odos.omardirty999.workers.dev/instapay-qr.webp",
   CUSTOM_FEE:0,   /* extra EGP charged on top of the case price for a custom design */
@@ -681,7 +682,7 @@ document.addEventListener("click",function(e){
 drawShopFor();drawRV();setPlat(platOf(LS.b||brandOf(LS.m)));
 /* ===== custom design page ===== */
 var cu={k:"tough",b:"",m:"",img:""};
-function customNote(){return cart.some(function(c){return c.i===-1;})?'<p class="note warn">Your cart has a custom design. After you place the order, send us your image on WhatsApp so we can start. <span class="ar">بعد الطلب ابعتلنا الصورة على واتساب</span> <a style="text-decoration:underline;font-weight:700" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I ordered a custom design. Sending my image now.")+'">Open WhatsApp</a></p>':"";}
+function customNote(){return cart.some(function(c){return c.i===-1&&!c.u;})?'<p class="note warn">Your cart has a custom design. After you place the order, send us your image on WhatsApp so we can start. <span class="ar">بعد الطلب ابعتلنا الصورة على واتساب</span> <a style="text-decoration:underline;font-weight:700" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I ordered a custom design. Sending my image now.")+'">Open WhatsApp</a></p>':"";}
 function drawCu(){var c=kase(cu.k),ok=!!(cu.img&&cu.m);
  $("cuCase").className="case "+c.c;
  $("cuCtl").innerHTML='<div class="field"><span class="l">2 · Case <span class="ar">الجراب</span></span><div class="chips">'+CASES.map(function(x){return '<button class="chip'+(x.id===cu.k?' on':'')+'" data-ck="'+x.id+'">'+x.n+'</button>';}).join("")+'</div><p class="muted" style="margin:8px 0 0">'+c.d+'</p>'+cph(c)+'</div>'+
@@ -691,21 +692,32 @@ function syncCu(){var ok=!!(cu.img&&cu.m);$("cuAdd").disabled=!ok;$("cuHelp").st
 pkBind($("page-custom"),function(){return cu;},function(){$("cuPk").innerHTML=pk(cu);syncCu();setPlat(platOf(cu.b));});
 $("cuFile").addEventListener("change",function(e){var f=e.target.files[0];if(!f)return;
  if(!/^image\/(png|jpeg|webp)$/.test(f.type)||f.size>10*1048576){$("cuName").textContent="Please choose a PNG, JPG or WebP image under 10 MB.";e.target.value="";return;}
- if(cu.img)URL.revokeObjectURL(cu.img);cu.img=URL.createObjectURL(f);$("cuName").textContent=f.name;
+ if(cu.img)URL.revokeObjectURL(cu.img);cu.img=URL.createObjectURL(f);cu.file=f;cu.upKey="";$("cuName").textContent=f.name;
  var old=$("cuCase").querySelector("img");if(old)old.remove();var im=new Image();im.alt="Your design";im.src=cu.img;$("cuCase").appendChild(im);syncCu();});
 $("page-custom").addEventListener("click",function(e){var t=e.target.closest("button");if(!t)return;
  if(t.hasAttribute("data-ck")){cu.k=t.getAttribute("data-ck");if(cu.m&&!mvalid(cu.k,cu.m))cu.m="";if(cu.b&&!mfor(brand(cu.b),cu.k).length){cu.b="";cu.m="";}drawCu();return;}
- if(t.id==="cuAdd"&&cu.img&&cu.m){add(-1,cu.k,cu.m,1);saveLS(cu.k,cu.m,cu.b);toast();
-  $("cuDone").innerHTML='<p class="note warn"><b>Added to your cart.</b> Now send us your image on WhatsApp so we can check it. <span class="ar">ابعتلنا الصورة على واتساب</span><br><a class="btn full" style="margin-top:10px" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I just added a custom design ("+kase(cu.k).n+", "+cu.m+"). Sending my image now.")+'">Send your image on WhatsApp</a></p>';}});
+ if(t.id==="cuAdd"&&cu.img&&cu.m){
+  var fin=function(u){add(-1,cu.k,cu.m,1,u);saveLS(cu.k,cu.m,cu.b);toast();
+   $("cuDone").innerHTML=u?'<p class="note warn"><b>Added to your cart.</b> Your image is uploaded and attached to your order, so there is nothing else to send. We will still confirm with you on WhatsApp. <span class="ar">الصورة اتحملت مع طلبك</span></p>':
+    '<p class="note warn"><b>Added to your cart.</b> Now send us your image on WhatsApp so we can check it. <span class="ar">ابعتلنا الصورة على واتساب</span><br><a class="btn full" style="margin-top:10px" target="_blank" rel="noopener" href="'+waLink("Hi Caseo, I just added a custom design ("+kase(cu.k).n+", "+cu.m+"). Sending my image now.")+'">Send your image on WhatsApp</a></p>';};
+  if(!CFG.API||!cu.file){fin("");return;}
+  if(cu.upKey&&UP_RE.test(cu.upKey)){fin(cu.upKey);return;}
+  var lbl=t.innerHTML;t.disabled=true;t.textContent="Uploading your image…";$("cuDone").innerHTML="";
+  fetch(CFG.API+"/api/upload",{method:"POST",headers:{"Content-Type":cu.file.type||"application/octet-stream"},body:cu.file})
+   .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||"Upload failed");return j;});})
+   .then(function(j){cu.upKey=j.key;fin(j.key);})
+   .catch(function(err){$("cuDone").innerHTML='<p class="note warn">'+esc(err.message==="Failed to fetch"?"We couldn't upload your image. Check your connection and try again, or send it to us on WhatsApp.":err.message)+'</p>';})
+   .then(function(){t.disabled=false;t.innerHTML=lbl;});}});
 function cuSync(){if(!cu.b&&LS.b)cu.b=LS.b;if(!cu.m&&lsOK()&&brandOf(LS.m)===cu.b&&mvalid(cu.k,LS.m))cu.m=LS.m;drawCu();}
 cuSync();
 
 /* ===== cart ===== */
+var UP_RE=/^custom\/[a-f0-9-]{36}\.(png|jpg|webp)$/;
 var cart=[];try{cart=JSON.parse(localStorage.getItem("caseo_cart")||"[]");}catch(e){}
 var esc=function(v){return String(v).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});};
-cart=(Array.isArray(cart)?cart:[]).filter(function(c){return c&&kase(c.k)&&Number.isInteger(c.i)&&(c.i===-1||DES[c.i])&&mvalid(c.k,c.m);}).map(function(c){return{i:c.i,k:c.k,m:c.m,q:Math.max(1,Math.min(20,Math.floor(+c.q)||1))};});
+cart=(Array.isArray(cart)?cart:[]).filter(function(c){return c&&kase(c.k)&&Number.isInteger(c.i)&&(c.i===-1||DES[c.i])&&mvalid(c.k,c.m);}).map(function(c){return{i:c.i,k:c.k,m:c.m,q:Math.max(1,Math.min(20,Math.floor(+c.q)||1)),u:(c.i===-1&&typeof c.u==="string"&&UP_RE.test(c.u))?c.u:""};});
 function save(){try{localStorage.setItem("caseo_cart",JSON.stringify(cart));}catch(e){}renderCart();}
-function add(i,k,m,q){var h=cart.filter(function(c){return c.i===i&&c.k===k&&c.m===m;})[0];if(h)h.q=Math.min(20,h.q+q);else cart.push({i:i,k:k,m:m,q:Math.min(20,q)});save();}
+function add(i,k,m,q,u){u=u||"";var h=cart.filter(function(c){return c.i===i&&c.k===k&&c.m===m&&(c.u||"")===u;})[0];if(h)h.q=Math.min(20,h.q+q);else cart.push({i:i,k:k,m:m,q:Math.min(20,q),u:u});save();}
 function nm(c){return c.i===-1?"Custom design":DES[c.i].n;}
 function pr(c){return kase(c.k).price+(c.i===-1?(+CFG.CUSTOM_FEE||0):0);}
 function total(){return cart.reduce(function(s,c){return s+pr(c)*c.q;},0);}
@@ -731,12 +743,28 @@ function post(f,btn,msg,label,ok){if(Date.now()-lastPost<15000){msg.textContent=
 var PLACE_LABEL=$("placeBtn").textContent;
 $("orderForm").addEventListener("submit",function(e){e.preventDefault();if(!cart.length)return;
  var f=e.target,ed=getOrder(editingRef),id=ed?ed.ref:"CS-"+Date.now().toString(36).toUpperCase().slice(-6),snap=snapOrder(id,ed);
- var lines=cart.map(function(c){return (c.i===-1?"CUSTOM DESIGN (customer sends the image on WhatsApp)":DES[c.i].n+" #"+dnum(c.i))+" ("+kase(c.k).n+", "+c.m+") x"+c.q+" — "+fmt(pr(c)*c.q);});
+ var lines=cart.map(function(c){return (c.i===-1?(c.u?"CUSTOM DESIGN (image uploaded to R2: "+c.u+")":"CUSTOM DESIGN (customer sends the image on WhatsApp)"):DES[c.i].n+" #"+dnum(c.i))+" ("+kase(c.k).n+", "+c.m+") x"+c.q+" — "+fmt(pr(c)*c.q);});
  $("fId").value=id;$("fTotal").value=fmt(total())+(ed?" | previous total "+fmt(ed.total)+", extra to pay "+fmt(Math.max(0,total()-ed.total)):"");
  f.elements.subject.value=ed?"Caseo order UPDATE "+id:"New Caseo Order";
  $("fDetails").value=(ed?"[UPDATE TO ORDER "+id+" — revised full list replaces the earlier one] "+diffText(ed,snap)+" || ":"[NEW ORDER "+id+"] ")+lines.join(" | ");
- post(f,$("placeBtn"),$("orderMsg"),ed?"Send order update":PLACE_LABEL,function(){finishOrder(snap,ed);f.reset();
-  $("lines").innerHTML='<p class="empty"><b>Order '+esc(id)+(ed?' updated.':' placed.')+'</b><br>We will message you on WhatsApp to confirm. You can view or edit it from the home page.</p>';$("checkout").style.display="none";});});
+ var done=function(sn){finishOrder(sn,ed);f.reset();
+  $("lines").innerHTML='<p class="empty"><b>Order '+esc(sn.ref)+(ed?' updated.':' placed.')+'</b><br>We will message you on WhatsApp to confirm. You can view or edit it from the home page.</p>';$("checkout").style.display="none";};
+ var viaForm=function(){post(f,$("placeBtn"),$("orderMsg"),ed?"Send order update":PLACE_LABEL,function(){done(snap);});};
+ if(!CFG.API){viaForm();return;}
+ /* main path: our own Worker saves the order in the database and emails us. If the Worker is down, fall back to Web3Forms so no order is lost. */
+ var pb=$("placeBtn"),msg=$("orderMsg"),pay=f.querySelector('input[name="payment"]:checked'),sent=false;
+ var v=function(n){return f.elements[n]?f.elements[n].value.trim():"";};
+ var body={ref:ed?ed.ref:undefined,verifyPhone:(ed&&ed.cust)?ed.cust.phone:undefined,name:v("name"),email:v("email"),phone:v("phone"),whatsapp:v("whatsapp"),address:v("address"),city:v("city"),payment:pay?pay.value:"",notes:v("notes"),botcheck:!!(f.elements.botcheck&&f.elements.botcheck.checked),
+  items:cart.map(function(c){return{i:c.i,n:nm(c),k:c.k,m:c.m,q:c.q,u:c.u||""};})};
+ var restore=function(){pb.disabled=false;pb.textContent=ed?"Send order update":PLACE_LABEL;};
+ pb.disabled=true;pb.textContent="Sending…";msg.textContent="";
+ fetch(CFG.API+(ed?"/api/orders/update":"/api/orders"),{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+  .then(function(r){return r.json().catch(function(){return{};}).then(function(j){return{s:r.status,j:j};});})
+  .then(function(x){
+   if(x.s>=200&&x.s<300&&x.j.ref){sent=true;snap.ref=x.j.ref;if(typeof x.j.total==="number"&&x.j.total>0)snap.total=x.j.total;restore();done(snap);return;}
+   if(x.s===400||x.s===403||x.s===409||x.s===413||x.s===429){sent=true;msg.textContent=x.j.error||"We couldn't send your order. Please check the form and try again.";restore();return;}
+   throw new Error("api "+x.s);})
+  .catch(function(){if(sent)return;restore();viaForm();});});
 $("contactForm").addEventListener("submit",function(e){e.preventDefault();post(e.target,e.target.querySelector("button"),$("contactMsg"),"Send message · ابعت رسالة",function(){$("contactMsg").textContent="Message sent. We'll reply soon.";e.target.reset();});});
 renderCart();
 
@@ -748,9 +776,9 @@ function getOrder(r){return r?orders.filter(function(o){return o.ref===r;})[0]:n
 if(editingRef&&!getOrder(editingRef)){editingRef=null;try{localStorage.removeItem("caseo_editing");localStorage.removeItem("caseo_cart_stash");}catch(e){}}
 function saveOrders(){try{localStorage.setItem("caseo_orders",JSON.stringify(orders));}catch(e){}drawOrders();}
 function snapOrder(id,ed){var F=$("orderForm").elements,v=function(n){return F[n]?F[n].value.trim():"";},pay=$("orderForm").querySelector('input[name="payment"]:checked');
- return{ref:id,at:ed?ed.at:Date.now(),upd:Date.now(),rev:ed?(ed.rev||0)+1:0,total:total(),items:cart.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q};}),
+ return{ref:id,at:ed?ed.at:Date.now(),upd:Date.now(),rev:ed?(ed.rev||0)+1:0,total:total(),items:cart.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q,u:c.u||""};}),
   cust:{name:v("name"),email:v("email"),phone:v("phone"),whatsapp:v("whatsapp"),address:v("address"),city:v("city"),payment:pay?pay.value:""}};}
-function ikey(c){return c.i+"|"+c.k+"|"+c.m;}
+function ikey(c){return c.i+"|"+c.k+"|"+c.m+"|"+(c.u||"");}
 function ilabel(c){return nm(c)+" ("+kase(c.k).n+", "+c.m+")";}
 function diffText(o,n){var om={},nn={},out=[];o.items.forEach(function(c){om[ikey(c)]=c;});n.items.forEach(function(c){nn[ikey(c)]=c;});
  n.items.forEach(function(c){var x=om[ikey(c)];if(!x)out.push("ADDED "+ilabel(c)+" x"+c.q);else if(x.q!==c.q)out.push("QTY "+ilabel(c)+" "+x.q+" -> "+c.q);});
@@ -761,7 +789,7 @@ function finishOrder(snap,ed){if(ed){orders[orders.indexOf(ed)]=snap;exitEdit();
 function startEdit(ref){var o=getOrder(ref);if(!o)return;if(editingRef&&editingRef!==ref)exitEdit();
  if(!editingRef){try{localStorage.setItem("caseo_cart_stash",JSON.stringify(cart));}catch(e){}}
  editingRef=ref;try{localStorage.setItem("caseo_editing",ref);}catch(e){}
- cart=o.items.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q};});
+ cart=o.items.map(function(c){return{i:c.i,k:c.k,m:c.m,q:c.q,u:(c.i===-1&&UP_RE.test(c.u||""))?c.u:""};});
  var c=o.cust||{},F=$("orderForm").elements;["name","email","phone","whatsapp","address","city"].forEach(function(n){if(F[n])F[n].value=c[n]||"";});if(F.notes)F.notes.value="";
  var r=$("orderForm").querySelector('input[name="payment"][value="'+(c.payment||"")+'"]');if(r)r.checked=true;
  save();drawOrders();location.hash="#cart";}
